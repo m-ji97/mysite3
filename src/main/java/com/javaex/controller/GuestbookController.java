@@ -26,7 +26,24 @@ public class GuestbookController extends HttpServlet {
 
 
 			//guestbook.jsp 포워드
-			WebUtil.redirect(request, response, "/WEB-INF/views/guestbook/addList.jsp");
+			WebUtil.forward(request, response, "/WEB-INF/views/guestbook/addList.jsp");
+		
+		}else if("actionaddlist".equalsIgnoreCase(action)){
+			System.out.println("guestbook>actionaddlist");
+			
+			//guestbook.jsp 포워드
+			WebUtil.forward(request, response, "/WEB-INF/views/guestbook/addList.jsp");
+		}
+		
+		else if("deleteform".equalsIgnoreCase(action)) {
+			System.out.println("guestbook>deleteform");
+
+
+			//guestbook.jsp 포워드
+			WebUtil.forward(request, response, "/WEB-INF/views/guestbook/deleteForm.jsp");
+		
+		}else if("actiondelete".equalsIgnoreCase(action)) {
+			WebUtil.forward(request, response, "/WEB-INF/views/guestbook/deleteForm.jsp");
 		}
 	}
 
