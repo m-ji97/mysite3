@@ -19,6 +19,14 @@ public class UserVo {
 		this.id = id;
 		this.pw = pw;
 	}
+	
+
+
+
+	public UserVo(int no, String pw) {
+		this.no = no;
+		this.pw = pw;
+	}
 
 
 

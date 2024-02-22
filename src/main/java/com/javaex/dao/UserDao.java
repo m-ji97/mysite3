@@ -18,6 +18,7 @@ public class UserDao {
 	private String id = "web";
 	private String pw = "web";
 
+	
 	// 연결
 	public void getConnection() {
 		try {
@@ -54,64 +55,64 @@ public class UserDao {
 		}
 	}
 
-	// 회원가입
-	public int userInsert(UserVo uservo) {
+	public int insertUser(UserVo userVo) {
 		int count = -1;
-
+		
 		this.getConnection();
-
+		
 		try {
-
 			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
 			String query = "";
 			query += " insert into users ";
-			query += " values(null,?,?,?,?)";
-
-			// 바인딩
-			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, uservo.getId());
-			pstmt.setString(2, uservo.getPw());
-			pstmt.setString(3, uservo.getName());
-			pstmt.setString(4, uservo.getGender());
-
-			// 실행
-			count = pstmt.executeUpdate();
-
-			// 4.결과처리
-			System.out.println(count + "건 등록되었습니다.");
-
-		} catch (SQLException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
-		}
-		this.close();
-
-		return count;
-	}
-
-	public UserVo selectUserByIdPw(UserVo uservo) {
-		UserVo authUser=null;
-
-		this.getConnection();
-
-		try {
-	
-			// 3. SQL문 준비 / 바인딩 / 실행
-			String query="";
-			query += " select 	no, ";
-			query += " 			name ";
-			query += " from users ";
-			query += " where id=? ";
-			query += " and password=? ";
-	
+			query += " value(null, ?, ?, ?, ?);";
+			
 			//바인딩
 			pstmt = conn.prepareStatement(query);
-			pstmt.setString(1, uservo.getId());
-			pstmt.setString(2, uservo.getPw());
+			pstmt.setString(1, userVo.getId());
+			pstmt.setString(2, userVo.getPw());
+			pstmt.setString(3, userVo.getName());
+			pstmt.setString(4, userVo.getGender());
+			
+		
+			//실행
+			count = pstmt.executeUpdate();
+
+		    // 4.결과처리
+			System.out.println(count + "건 등록 되었습니다.");
+			
+		}  catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		this.close();
+		
+		return 1;
+	}
 	
+	public UserVo selectUserByIdPw(UserVo authUser) {
+		
+		this.getConnection();
+		
+		try {
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
+			String query = "";
+			query += " select no, ";
+			query += "        name ";
+			query += " from users ";
+			query += " where id=? ";
+			query += " and password =? ";
+			
+			//바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, authUser.getId());
+			pstmt.setString(2, authUser.getPw());
+		
 			//실행
 			rs = pstmt.executeQuery();
-	
-			// 4.결과처리
+
+		    // 4.결과처리
 			while(rs.next()) {
 				int no = rs.getInt("no");
 				String name = rs.getString("name");
@@ -119,12 +120,54 @@ public class UserDao {
 				authUser.setNo(no);
 				authUser.setName(name);
 			}
-	
-		} catch (SQLException e) {
-			System.out.println("error: 드라이버 로딩 실패 - " + e);
+			
+			System.out.println("로그인 되었습니다.");
+			
+		}  catch (SQLException e) {
+			System.out.println("error:" + e);
 		} 
+		
 		this.close();
-	
+		
 		return authUser;
+	}
+	
+	//수정
+	public int userModify(int no, String id, String pw, String name, String gender) {
+		int count = -1;
+		
+		this.getConnection();
+		
+		try {
+			// 3. SQL문 준비 / 바인딩 / 실행
+			// - sql문 준비
+			String query = "";
+			query += " update users ";
+			query += " set password =?, ";
+			query += " name =?, ";
+			query += " gender =? ";
+			query += " where no =? ";
+			
+			//바인딩
+			pstmt = conn.prepareStatement(query);
+			pstmt.setString(1, pw);
+			pstmt.setString(2, name);
+			pstmt.setString(3, gender);
+			pstmt.setInt(4, no);
+			
+			//실행
+			count = pstmt.executeUpdate();
+
+		    // 4.결과처리
+			System.out.println(count + "건 수정 되었습니다.");
+			
+		}  catch (SQLException e) {
+			System.out.println("error:" + e);
+		} 
+		
+		this.close();
+		
+		return 1;
+		
 	}
 }
