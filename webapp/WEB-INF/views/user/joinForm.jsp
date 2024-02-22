@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="com.javaex.vo.UserVo" %>
+    
+<%
+	UserVo authuser = (UserVo)session.getAttribute("authUser");
+
+%>
 
 <!DOCTYPE html>
 <html>
@@ -14,34 +20,11 @@
 <body>
 	<div id="wrap">
 
-		<div id="header" class="clearfix">
-			<h1>
-				<a href="">MySite</a>
-			</h1>
-
-			<!-- 
-			<ul>
-				<li>황일영 님 안녕하세요^^</li>
-				<li><a href="" class="btn_s">로그아웃</a></li>
-				<li><a href="" class="btn_s">회원정보수정</a></li>
-			</ul>
-			-->	
-			<ul>
-				<li><a href="" class="btn_s">로그인</a></li>
-				<li><a href="" class="btn_s">회원가입</a></li>
-			</ul>
-			
-		</div>
+		<!-- header -->
+		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
 		<!-- //header -->
-
-		<div id="nav">
-			<ul class="clearfix">
-				<li><a href="">입사지원서</a></li>
-				<li><a href="">게시판</a></li>
-				<li><a href="">갤러리</a></li>
-				<li><a href="">방명록</a></li>
-			</ul>
-		</div>
+		
+		<!-- nav -->
 		<!-- //nav -->
 
 		<div id="container" class="clearfix">
@@ -72,7 +55,7 @@
 	
 				<div id="user">
 					<div id="joinForm">
-						<form action="http://localhost:8080/mysite3/user" method="get">
+						<form action="/mysite3/user" method="get">
 	
 							<!-- 아이디 -->
 							<div class="form-group">
@@ -115,10 +98,10 @@
 							
 							<!-- 버튼영역 -->
 							<div class="button-area">
-								<button type="submit" id="btn-submit">회원가입</button>
+								<button type="" id="btn-submit">회원가입</button>
 							</div>
 							
-							<input type="text" name="action" value="join">
+							<input type="hidden" name="action" value="join">
 							
 						</form>
 					</div>
@@ -130,9 +113,9 @@
 		</div>
 		<!-- //container  -->
 		
-		<div id="footer">
-			Copyright ⓒ 2020 황일영. All right reserved
-		</div>
+		<!-- //footer -->
+		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include><!-- //foocter.jsp를
+		불러와라 -->
 		<!-- //footer -->
 
 	</div>
